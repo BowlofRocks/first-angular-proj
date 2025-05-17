@@ -1,8 +1,18 @@
+<app-header (selectedFeatureEvent)="switchView($event)"></app-header>
+
 <div class="container">
   <div class="row">
-    <div class="col-md-12"></div>
-    <app-header></app-header>
-    <app-contacts></app-contacts>
-    <h2>This works</h2>
+    <div class="col-md-12">
+      <!-- Show Documents view if selectedFeature is 'documents' -->
+      <app-documents *ngIf="selectedFeature === 'documents'"></app-documents>
+
+      <!-- Show Messages view if selectedFeature is 'messages' -->
+      <app-message-list
+        *ngIf="selectedFeature === 'messages'"
+      ></app-message-list>
+
+      <!-- Show Contacts view if selectedFeature is 'contacts' -->
+      <app-contacts *ngIf="selectedFeature === 'contacts'"></app-contacts>
+    </div>
   </div>
 </div>

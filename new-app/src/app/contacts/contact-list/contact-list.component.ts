@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Contact } from '../contact.model';
 // import jacksonk from "../../../a";
 @Component({
@@ -27,6 +27,12 @@ export class ContactListComponent {
       group: []
     }
   ];
+  
+  @Output() selectedContactEvent = new EventEmitter<Contact>();
+
+  onSelected(contact: Contact) {
+    this.selectedContactEvent.emit(contact);
+  }
 }
 
 
