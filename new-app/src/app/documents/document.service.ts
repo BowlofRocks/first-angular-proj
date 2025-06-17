@@ -9,7 +9,10 @@ export class DocumentService {
   documents: Document[] = [];
 
   // ✅ New EventEmitter for cross-component communication
-  documentSelectedEvent = new EventEmitter<Document>();
+documentChangedEvent = new EventEmitter<Document[]>();
+documentSelectedEvent = new EventEmitter<Document>();
+
+
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
@@ -27,4 +30,14 @@ export class DocumentService {
     }
     return null;
   }
+
+deleteDocument(document: Document): void {
+  const index = this.documents.findIndex(doc => doc.id === document.id);
+  if (index !== -1) {
+    this.documents.splice(index, 1);
+    this.documentChangedEvent.emit(this.documents.slice()); // Emit updated list
+  }
+}
+
+
 }

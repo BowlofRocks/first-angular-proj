@@ -1,4 +1,10 @@
-<li class="list-group-item">
+<li
+  class="list-group-item"
+  [routerLink]="['/contacts', contact.id]"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  style="cursor: pointer"
+>
   <img
     [src]="contact.imageUrl"
     alt="{{ contact.name }}"

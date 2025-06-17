@@ -2,7 +2,12 @@
   <div class="panel-heading">
     <div class="row pad-left-right">
       <span class="pull-left title">Documents</span>
-      <a class="btn btn-success pull-right">Add Document</a>
+      <a
+        class="btn btn-success pull-right"
+        [routerLink]="['/documents', 'new']"
+      >
+        Add Document
+      </a>
     </div>
   </div>
 
@@ -10,13 +15,19 @@
     <div class="document-layout">
       <!-- Document list -->
       <div class="document-list">
-        <app-document-item
+        <a
           *ngFor="let document of documents"
-          [document]="document"
-          (click)="onSelectedDocument(document)"
-          [class.selected]="document === selectedDocument"
-          style="cursor: pointer"
-        ></app-document-item>
+          [routerLink]="['/documents', document.id]"
+          routerLinkActive="active"
+          class="text-decoration-none"
+          style="display: block"
+        >
+          <app-document-item
+            [document]="document"
+            [class.selected]="document === selectedDocument"
+            style="cursor: pointer"
+          ></app-document-item>
+        </a>
       </div>
     </div>
   </div>

@@ -1,4 +1,8 @@
-<a class="document-box clearfix">
+<a
+  class="document-box clearfix"
+  [routerLink]="['/documents', document.id]"
+  routerLinkActive="active"
+>
   <div class="pull-left">
     <h4 class="document-title">{{ document.name }}</h4>
     <p class="document-description">{{ document.description }}</p>

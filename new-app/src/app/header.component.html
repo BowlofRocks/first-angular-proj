@@ -1,57 +1,43 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-  <a class="navbar-brand fw-bold" href="#">WeLearn CMS</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">WeLearn CMS</a>
 
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          href="javascript:void(0)"
-          (click)="onSelected('documents')"
-        >
-          Documents
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          href="javascript:void(0)"
-          (click)="onSelected('messages')"
-        >
-          Messages
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          href="javascript:void(0)"
-          (click)="onSelected('contacts')"
-        >
-          Contacts
-        </a>
-      </li>
-    </ul>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item dropdown" appDropdown>
-        <a
-          class="nav-link dropdown-toggle"
-          href="javascript:void(0)"
-          id="navbarUserDropdown"
-          role="button"
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
-          User
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarUserDropdown"
+          <a class="nav-link" routerLink="/documents">Documents</a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
-          <li>
-            <a class="dropdown-item" href="javascript:void(0)">Profile</a>
-          </li>
-          <li><a class="dropdown-item" href="javascript:void(0)">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
+          <a class="nav-link" routerLink="/messages">Messages</a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link" routerLink="/contacts">Contacts</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
