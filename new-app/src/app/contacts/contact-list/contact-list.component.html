@@ -8,19 +8,29 @@
     *ngFor="let contact of contacts"
     class="list-group-item d-flex align-items-center"
   >
-    <img
-      [src]="contact.imageUrl"
-      alt="{{ contact.name }}"
-      class="img-thumbnail"
-      width="50"
-      height="50"
-      style="object-fit: cover"
-    />
+    <div
+      cdkDrag
+      [cdkDragData]="contact"
+      class="drag-handle me-3"
+      style="cursor: move"
+      aria-label="Drag handle"
+      title="Drag to add to group"
+    >
+      <img
+        [src]="contact.imageUrl"
+        alt="{{ contact.name }}"
+        class="img-thumbnail"
+        width="50"
+        height="50"
+        style="object-fit: cover"
+      />
+    </div>
+
     <a
       [routerLink]="['/contacts', contact.id]"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="ms-3 text-decoration-none flex-grow-1"
+      class="text-decoration-none flex-grow-1"
     >
       {{ contact.name }}
     </a>

@@ -1,9 +1,8 @@
 <li
-  class="list-group-item"
-  [routerLink]="['/contacts', contact.id]"
-  routerLinkActive="active"
-  [routerLinkActiveOptions]="{ exact: true }"
-  style="cursor: pointer"
+  class="list-group-item d-flex align-items-center"
+  cdkDrag
+  [cdkDragData]="contact"
+  style="cursor: grab"
 >
   <img
     [src]="contact.imageUrl"
