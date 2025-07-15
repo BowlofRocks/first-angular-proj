@@ -1,38 +1,63 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2>Contacts</h2>
-  <a class="btn btn-primary" [routerLink]="['/contacts', 'new']">New Contact</a>
-</div>
-
-<ul class="list-group">
-  <li
-    *ngFor="let contact of contacts"
-    class="list-group-item d-flex align-items-center"
-  >
-    <div
-      cdkDrag
-      [cdkDragData]="contact"
-      class="drag-handle me-3"
-      style="cursor: move"
-      aria-label="Drag handle"
-      title="Drag to add to group"
-    >
-      <img
-        [src]="contact.imageUrl"
-        alt="{{ contact.name }}"
-        class="img-thumbnail"
-        width="50"
-        height="50"
-        style="object-fit: cover"
-      />
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <span class="title pad-left-right">Contacts</span>
     </div>
+    <div class="row">
+      <div class="input-group pull-left pad-left-right col-xs-7">
+        <!-- Updated search input -->
+        <input
+          type="text"
+          #searchBox
+          (keyup)="search(searchBox.value)"
+          class="form-control"
+          placeholder="Enter a search value"
+        />
 
-    <a
-      [routerLink]="['/contacts', contact.id]"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="text-decoration-none flex-grow-1"
+        <div
+          class="glyphicon glyphicon-search input-group-addon"
+          (click)="search(searchBox.value)"
+          style="cursor: pointer"
+          title="Click to search"
+        ></div>
+      </div>
+    </div>
+    <div class="pull-right pad-left-right">
+      <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+    </div>
+  </div>
+
+  <ul class="list-group">
+    <li
+      *ngFor="let contact of contacts | contactsFilter : term"
+      class="list-group-item d-flex align-items-center"
     >
-      {{ contact.name }}
-    </a>
-  </li>
-</ul>
+      <div
+        cdkDrag
+        [cdkDragData]="contact"
+        class="drag-handle me-3"
+        style="cursor: move"
+        aria-label="Drag handle"
+        title="Drag to add to group"
+      >
+        <img
+          [src]="contact.imageUrl"
+          alt="{{ contact.name }}"
+          class="img-thumbnail"
+          width="50"
+          height="50"
+          style="object-fit: cover"
+        />
+      </div>
+
+      <a
+        [routerLink]="['/contacts', contact.id]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="text-decoration-none flex-grow-1"
+      >
+        {{ contact.name }}
+      </a>
+    </li>
+  </ul>
+</div>

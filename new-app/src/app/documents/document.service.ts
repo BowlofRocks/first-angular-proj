@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,46 @@ export class DocumentService {
   maxDocumentId: number = 0;
 
   documentSelectedEvent = new Subject<Document>();
-  documentListChangedEvent = new Subject<Document[]>();  // Replaces EventEmitter
+  documentListChangedEvent = new Subject<Document[]>();
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  // Replace this URL with your actual Firebase Realtime Database URL
+  private firebaseUrl: string = 'https://full-stack-amago-default-rtdb.firebaseio.com/documents.json';
+
+  constructor(private http: HttpClient) {}
+
+  // 🔁 Fetch documents from Firebase using HTTP GET
+  getDocuments() {
+    this.http.get<Document[]>(this.firebaseUrl).subscribe(
+      (documents: Document[]) => {
+        this.documents = documents ?? [];
+        this.maxDocumentId = this.getMaxId();
+
+        // Sort by name
+        this.documents.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        });
+
+        // Notify listeners
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      (error: any) => {
+        console.error('Error fetching documents:', error);
+      }
+    );
   }
 
-  getDocuments(): Document[] {
-    return this.documents.slice();
+  // 📝 Save documents to Firebase using HTTP PUT
+  storeDocuments() {
+    this.http.put(this.firebaseUrl, this.documents).subscribe(
+      () => {
+        console.log('Documents saved successfully.');
+      },
+      (error) => {
+        console.error('Error saving documents:', error);
+      }
+    );
   }
 
   getDocument(id: string): Document | null {
@@ -52,6 +83,9 @@ export class DocumentService {
     this.documents.push(newDocument);
 
     this.documentListChangedEvent.next(this.documents.slice());
+
+    // Save to Firebase
+    this.storeDocuments();
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -68,6 +102,9 @@ export class DocumentService {
     this.documents[pos] = newDocument;
 
     this.documentListChangedEvent.next(this.documents.slice());
+
+    // Save to Firebase
+    this.storeDocuments();
   }
 
   deleteDocument(document: Document): void {
@@ -75,6 +112,9 @@ export class DocumentService {
     if (index !== -1) {
       this.documents.splice(index, 1);
       this.documentListChangedEvent.next(this.documents.slice());
+
+      // Save to Firebase
+      this.storeDocuments();
     }
   }
 }
